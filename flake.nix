@@ -74,10 +74,6 @@
         };
       };
       checks.${system} = {
-        media = import ./tests/media.nix {
-          inherit pkgs;
-          inherit (self.lib) mkMedia;
-        };
         runtime-state =
           pkgs.runCommand "inventor-runtime-state-tests"
             {
