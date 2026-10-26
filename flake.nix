@@ -74,6 +74,10 @@
         };
       };
       checks.${system} = {
+        media = import ./tests/media.nix {
+          inherit pkgs;
+          inherit (self.lib) mkMedia;
+        };
         runtime-state =
           pkgs.runCommand "inventor-runtime-state-tests"
             {
@@ -113,6 +117,7 @@
       };
       formatter.${system} = pkgs.nixfmt;
       nixosModules.default = import ./nix/nixos-module.nix { inherit self; };
+      homeManagerModules.default = import ./nix/home-manager-module.nix { inherit self; };
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           wine
@@ -125,6 +130,7 @@
         ];
       };
       # Consumers supply hash-pinned original installation media, never a personal prefix.
+      lib.mkMedia = import ./nix/mk-media.nix { inherit pkgs; };
       lib.mkInventor =
         args:
         import ./nix/inventor.nix {

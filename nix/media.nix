@@ -41,17 +41,10 @@ let
       '';
     }).overrideAttrs
       { inherit meta; };
-  media =
-    pkgs.runCommand "inventor-${year}-english-media"
-      {
-        nativeBuildInputs = [ pkgs._7zz ];
-        inherit meta;
-      }
-      ''
-        mkdir -p "$out"
-        7zz x -y -o"$out" ${archive} > /dev/null
-        test -f "$out/manifest/app.inventor.xml"
-      '';
+  media = import ./mk-media.nix { inherit pkgs; } {
+    inherit archive;
+    name = "inventor-${year}-english-media";
+  };
 in
 {
   inherit media update;

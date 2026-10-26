@@ -12,7 +12,8 @@ with one command. Both releases can be installed side by side.
 > machines: AMD RX 580, and an Intel UHD 630 + NVIDIA GTX 1050 laptop - the
 > laptop with a slightly older version). **Ubuntu 26.04** and **Fedora 44**
 > install and run too (first tests, in a virtual machine). Inventor 2027 is
-> newer here and less tested than 2026. NixOS: a declarative flake (see
+> newer here and less tested than 2026. NixOS: a declarative flake with NixOS
+> and Home Manager modules (see
 > [NixOS](#nixos)). Reports are welcome.
 >
 > This is an unofficial community project. It is not made, supported or
@@ -273,9 +274,10 @@ asking, the Wine prefix. Your Inventor files in
 
 ## NixOS
 
-On x86_64 NixOS, a flake and module provide a declarative setup using your own
-Autodesk installation media and license. See [the NixOS setup guide](docs/nixos.md)
-for installation, system integration, and known limitations. The module uses
+On x86_64 NixOS, a flake with NixOS and Home Manager modules provides a
+declarative setup using your own Autodesk installation media and license.
+See [the NixOS setup guide](docs/nixos.md) for installation, user/system
+integration, custom installer sources, and known limitations. The runtime uses
 system graphics drivers and keeps sign-in and settings in persistent user state.
 
 ## FAQ
