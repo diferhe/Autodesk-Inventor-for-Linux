@@ -14,15 +14,6 @@
 }:
 let
   inherit (pkgs) lib;
-  mkWindowsPackage = overlayfsLib.mkWindowsPackage.override {
-    mkOverlayfsPackage = overlayfsLib.mkOverlayfsPackage.override {
-      overlayfsLib = overlayfsLib // {
-        hostUrlOpener = import ./host-url-opener.nix {
-          inherit (overlayfsLib) hostUrlOpener;
-        };
-      };
-    };
-  };
   inventorMeta = {
     description = "Autodesk Inventor ${year} through Wine and nix-overlayfs";
     homepage = "https://www.autodesk.com/products/inventor/overview";
@@ -120,7 +111,7 @@ let
         };
       });
 in
-withInventorMeta (mkWindowsPackage {
+withInventorMeta (overlayfsLib.mkWindowsPackage {
   inherit runtime;
   inherit version;
   portableReparsePoints = true;

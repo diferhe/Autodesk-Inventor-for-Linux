@@ -15,7 +15,8 @@ Broader application compatibility has not been validated.
 The default target is Inventor Professional 2026 English with the 2026.4 update
 and Content Center, on x86_64 Linux. Inventor 2027 English with update 2027.1
 is also available as a separate package. The runtime builds Wine 11.20 with every
-top-level patch in `patches/`. Nixpkgs and the nix-overlayfs fork are pinned in
+top-level patch in `patches/`. Nixpkgs and the
+[diferhe/nix-overlayfs](https://github.com/diferhe/nix-overlayfs) fork are pinned in
 `flake.lock`; no local checkout is required by the committed input definitions.
 The pinned nix-overlayfs revision includes Wine 11.20's Mono 11.3.0 dependency
 mapping and sandbox MSI link-action fix, published from the local development
@@ -388,6 +389,19 @@ The hidden Xvfb desktop still stops at “Loading…” when creating a standard
 with either graphics setup. Its cause remains undetermined; the successful
 normal-desktop test establishes the supported smoke-test result. The isolated
 desktop was stopped, and the authenticated test state was preserved.
+
+## Browser does not open during sign-in
+
+If the sign-in window stalls while the journal reports `Started Open URL from
+Wine prefix`, the host browser may have been terminated when `xdg-open` exited.
+The pinned nix-overlayfs fork includes the URL-opener fix using systemd's
+`ExitType=cgroup`, keeping a newly started browser alive after `xdg-open` returns.
+The same lifetime rule protects the short-lived browser process that forwards a
+URL to an already-running browser. Rebuild Home Manager with the updated flake
+to install the corrected launcher. No browser profile or display-backend changes
+are required. The Wine runtime and installed application layer are unchanged.
+After rebuilding, log out and back in if the application menu still launches
+the previous package; GNOME can retain the old desktop entry's command.
 
 ## Native Wayland limitation
 
